@@ -17,7 +17,7 @@ class Order implements OrderInterface
     {
         $this->client = $client;
         $this->needDelivery = $needDelivery;
-        $this->orderDate = date('Y-m-d H:i:s');
+        $this->orderDate = date('Y-m-d');
     }
 
     public function getDate(): string
@@ -71,13 +71,19 @@ class Order implements OrderInterface
         return $this->delivered;
     }
 
-    public function addProduct(Product $product, int $amount): Order
+    public function addProduct(Stock $stock, Product $product, int $amount): Order
     {
+        if(!$stock->getFromStock($product, $amount)) {
+            return $this;
+        }
+
         $this->products[] = [
             'product' => $product,
             'amount' => $amount,
         ];
-        $this->orderSum += $product->getPrice() * $amount;
+
+        $this->orderSum += ($product->getPrice() * 1.05) * $amount;
+
         return $this;
     }
 

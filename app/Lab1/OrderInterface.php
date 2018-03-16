@@ -22,7 +22,7 @@ interface OrderInterface
 
     public function isDelivered(): bool;
 
-    public function addProduct(Product $product, int $amount): Order;
+    public function addProduct(Stock $stock, Product $product, int $amount): Order;
 
     public function getOrderSum(): float;
 }
