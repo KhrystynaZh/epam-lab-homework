@@ -1,0 +1,22 @@
+{
+    "name": "halyna/epam.labs",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Kida",
+            "email": "kida@email.com"
+        }
+    ],
+    "require": {
+        "nesbot/carbon": "^1.24",
+        "symfony/var-dumper": "^4.0"
+    },
+    "autoload": {
+        "files": [
+            "helpers.php"
+        ],
+        "psr-4": {
+            "": "app"
+        }
+    }
+}
