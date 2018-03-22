@@ -7,14 +7,18 @@ class Product
     private $category;
     private $name;
     private $price;
-    private $characteristics = [];
 
-    public function __construct(string $category, string $name, float $price)
+    /**
+     * @var \Lab2\ProductCharacteristics
+     */
+    private $characteristics;
+
+    public function __construct(string $category, string $name, float $price, array $characteristics = [])
     {
         $this->category = $category;
         $this->name = $name;
         $this->price = $price;
-        $this->setCharacteristics($category);
+        $this->characteristics = new ProductCharacteristics($this->getCategory(), $characteristics);
     }
 
     /**
@@ -46,16 +50,18 @@ class Product
      */
     public function getCharacteristics(): array
     {
-        return $this->characteristics;
+        return $this->characteristics->getCharacteristics();
     }
 
     /**
-     * @param string $category
+     * @param array $characteristics
+     *
+     * @return \Lab2\Product
      */
-    public function setCharacteristics(string $category): void
+    public function setCharacteristics(array $characteristics): Product
     {
-        $characteristics = new Characteristics;
-        $this->characteristics = $characteristics->getCharacteristics($category);
+        $this->characteristics->setCharacteristics($characteristics);
+        return $this;
     }
 
 }

@@ -2,12 +2,34 @@
 
 namespace Lab2;
 
+/**
+ * Class Client
+ * @package Lab2
+ */
 class Client
 {
+    /**
+     * @var int
+     */
     private $id;
+
+    /**
+     * @var string
+     */
     private $address;
+
+    /**
+     * @var string
+     */
     private $phone;
 
+    /**
+     * Client constructor.
+     *
+     * @param int    $id
+     * @param string $address
+     * @param string $phone
+     */
     public function __construct(int $id, string $address, string $phone)
     {
         $this->id = $id;

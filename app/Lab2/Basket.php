@@ -2,12 +2,32 @@
 
 namespace Lab2;
 
+/**
+ * Class Basket
+ * @package Lab2
+ */
 class Basket
 {
+    /**
+     * @var \Lab2\Client
+     */
     private $client;
+
+    /**
+     * @var array
+     */
     private $products = [];
+
+    /**
+     * @var int
+     */
     private $basketSum = 0;
 
+    /**
+     * Basket constructor.
+     *
+     * @param \Lab2\Client $client
+     */
     public function __construct(Client $client)
     {
         $this->client = $client;
@@ -65,7 +85,7 @@ class Basket
      *
      * @return int
      */
-    public function getProductAmount(Product $product): int
+    private function getProductAmount(Product $product): int
     {
         return $this->products[$product->getCategory()][$product->getName()]['amount'] ?? 0;
     }
@@ -79,7 +99,7 @@ class Basket
      */
     public function deleteProduct(Store $store, Product $product, int $amount): Basket
     {
-        if($this->getProductAmount($product) >= $amount)
+        if($this->getProductAmount($product) <= $amount)
         {
             unset($this->products[$product->getCategory()][$product->getName()]);
         }
@@ -92,4 +112,14 @@ class Basket
         return $this;
     }
 
+    /**
+     * @return \Lab2\Basket
+     */
+    public function clearBasket(): Basket
+    {
+        $this->products = [];
+        $this->basketSum = 0;
+
+        return $this;
+    }
 }

@@ -2,59 +2,37 @@
 
 namespace Lab2;
 
+/**
+ * Class Store
+ * @package Lab2
+ */
 class Store
 {
+    /**
+     * @var string
+     */
     private $name;
-    private $address;
-    private $products = [];
-    private $payment;
-    private $delivery;
-    private $discount;
 
+    /**
+     * @var string
+     */
+    private $address;
+
+    /**
+     * @var array
+     */
+    private $products = [];
+
+    /**
+     * Store constructor.
+     *
+     * @param string $name
+     * @param string $address
+     */
     public function __construct(string $name, string $address)
     {
         $this->name = $name;
         $this->address = $address;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPayment()
-    {
-        return $this->payment;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDelivery()
-    {
-        return $this->delivery;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDiscount()
-    {
-        return $this->discount;
-    }
-
-    /**
-     * @param \Lab2\PaymentInterface $payment
-     */
-    public function setPayment(PaymentInterface $payment): void
-    {
-        $this->payment = $payment;
-    }
-
-    /**
-     * @param mixed $delivery
-     */
-    public function setDelivery($delivery): void
-    {
-        $this->delivery = $delivery;
     }
 
     /**
@@ -88,7 +66,7 @@ class Store
     }
 
     /**
-     * @param Product $product
+     * @param \Lab2\Product $product
      *
      * @return int
      */
@@ -120,5 +98,30 @@ class Store
         }
 
         return $amount;
+    }
+
+    /**
+     * @param \Lab2\Order $order
+     *
+     * @return \Lab2\Order
+     */
+    public function handleOrder(Order $order): Order
+    {
+        if(!$order->isPaid()) {
+            $order->getPayment()->createPayment($order->getOrderSum());
+            $order->setPaid();
+        }
+        return $order->setCompleted();
+    }
+
+    /**
+     * @param \Lab2\Order $order
+     */
+    public function sendConfirmation(Order $order): void
+    {
+        if($order->isCompleted()) {
+            echo 'Confirmation is sent to phone number: ' . $order->getClient()->getPhone() . '.';
+        }
+        return;
     }
 }
