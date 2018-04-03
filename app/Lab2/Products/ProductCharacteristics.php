@@ -1,10 +1,10 @@
 <?php
 
-namespace Lab2;
+namespace Lab2\Products;
 
 /**
  * Class ProductCharacteristics
- * @package Lab2
+ * @package Lab2\Products
  */
 class ProductCharacteristics
 {
@@ -63,7 +63,7 @@ class ProductCharacteristics
     /**
      * @param array $characteristics
      *
-     * @return \Lab2\ProductCharacteristics
+     * @return \Lab2\Products\ProductCharacteristics
      */
     public function setCharacteristics(array $characteristics): ProductCharacteristics
     {

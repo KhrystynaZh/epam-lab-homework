@@ -4,6 +4,7 @@ namespace Lab2;
 
 use Lab2\Deliveries\NovaPoshtaDelivery;
 use Lab2\Payments\WebMoneyPayment;
+use Lab2\Products\Product;
 
 //-----------------
 //створюємо магазин
@@ -55,15 +56,15 @@ $store->getProducts();
 $client = new Client(10, 'Zelena Str. 1', '12345678');
 
 //-----------------
-//заповнюємо кошик
+//заповнюємо кошик товарами з додатковими послугами
 //-----------------
 
 $basket = new Basket($client);
-$basket->addProduct($store, $laptop, 1)
-    ->addProduct($store, $dress, 2)
+$basket->addProduct($store, $laptop, 1, ['package'])
+    ->addProduct($store, $dress, 2, ['package', 'greetingCard'])
     ->addProduct($store, $doll, 3);
 
-$basket->deleteProduct($store, $dress, 1)
+$basket->deleteProduct($store, $dress, 1, ['package', 'greetingCard'])
     ->deleteProduct($store, $doll, 2);
 
 //-----------------

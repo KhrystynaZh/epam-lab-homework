@@ -2,12 +2,16 @@
 
 namespace Lab2;
 
+use Lab2\Products\IProduct;
+use Lab2\Products\ProductService;
+
 /**
  * Class Basket
  * @package Lab2
  */
 class Basket
 {
+
     /**
      * @var \Lab2\Client
      */
@@ -19,7 +23,7 @@ class Basket
     private $products = [];
 
     /**
-     * @var int
+     * @var float
      */
     private $basketSum = 0;
 
@@ -50,24 +54,29 @@ class Basket
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getBasketSum(): int
+    public function getBasketSum(): float
     {
         return $this->basketSum;
     }
 
     /**
-     * @param \Lab2\Store   $store
-     * @param \Lab2\Product $product
-     * @param int           $amount
+     * @param \Lab2\Store             $store
+     * @param \Lab2\Products\IProduct $product
+     * @param int                     $amount
+     * @param array                   $addServices
      *
      * @return \Lab2\Basket
      */
-    public function addProduct(Store $store, Product $product, int $amount): Basket
+    public function addProduct(Store $store, IProduct $product, int $amount, array $addServices = []): Basket
     {
         if(!$store->reserveProduct($product, $amount)) {
             return $this;
+        }
+
+        if($addServices) {
+            $product = (new ProductService($product, $addServices))->getProduct();
         }
 
         $this->products[$product->getCategory()][$product->getName()] = [
@@ -81,23 +90,24 @@ class Basket
     }
 
     /**
-     * @param \Lab2\Product $product
+     * @param \Lab2\Products\IProduct $product
      *
      * @return int
      */
-    private function getProductAmount(Product $product): int
+    private function getProductAmount(IProduct $product): int
     {
         return $this->products[$product->getCategory()][$product->getName()]['amount'] ?? 0;
     }
 
     /**
-     * @param \Lab2\Store   $store
-     * @param \Lab2\Product $product
-     * @param int           $amount
+     * @param \Lab2\Store             $store
+     * @param \Lab2\Products\IProduct $product
+     * @param int                     $amount
+     * @param array                   $addServices
      *
      * @return \Lab2\Basket
      */
-    public function deleteProduct(Store $store, Product $product, int $amount): Basket
+    public function deleteProduct(Store $store, IProduct $product, int $amount, array $addServices = []): Basket
     {
         if($this->getProductAmount($product) <= $amount)
         {
@@ -105,6 +115,10 @@ class Basket
         }
         else {
             $this->products[$product->getCategory()][$product->getName()]['amount'] -= $amount;
+        }
+
+        if($addServices) {
+            $product = (new ProductService($product, $addServices))->getProduct();
         }
 
         $this->basketSum -= ($product->getPrice()) * $amount;
