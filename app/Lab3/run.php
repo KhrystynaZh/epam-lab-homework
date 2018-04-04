@@ -19,28 +19,28 @@ echo 'Status: '. $task->getStatus() . '<br><br>';
 //надаємо йому статус inProgress і перевіряємо статус
 //-----------------
 
-$newTask = $newTask->inProgress();
+$newTask->inProgress();
 echo 'Status: '. $task->getStatus() . '<br><br>';
 
 //-----------------
 //надаємо йому статус resolved і перевіряємо статус
 //-----------------
 
-$newTask = $newTask->resolved();
+$newTask->resolved();
 echo 'Status: '. $task->getStatus() . '<br><br>';
 
 //-----------------
 //надаємо недоступний з даного кроку статус inProgress і перевіряємо статус
 //-----------------
 
-$newTask = $newTask->inProgress();
+$newTask->inProgress();
 echo 'Status: '. $task->getStatus() . '<br><br>';
 
 //-----------------
 //надаємо йому статус verified і перевіряємо статус
 //-----------------
 
-$newTask = $newTask->verified();
+$newTask->verified();
 echo 'Status: '. $task->getStatus() . '<br><br>';
 
 
