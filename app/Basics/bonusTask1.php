@@ -36,8 +36,5 @@ function getSumASCII($string)
 
 function compareSumASCII($a, $b)
 {
-    if (getSumASCII($a) == getSumASCII($b)) {
-        return true;
-    }
-        return false;
+    return (getSumASCII($a) == getSumASCII($b)) ? true : false;
 }
